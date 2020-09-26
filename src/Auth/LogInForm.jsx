@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import AuthApi from "../api/AuthApi";
 import AuthStore from "../api/AuthStore";
@@ -14,13 +15,14 @@ const tailLayout = {
 const LogInForm =  () => {
     let authService = new AuthApi();
     let user;
+    const history = useHistory();
     const onFinish  = async values => {
     console.log('Success:', values);
     await authService.login(values);
     const token = AuthStore.getToken();
     user = jwt(token);
-   // history.push(`/userpage/main/${user.nameid}`);
-    //window.location.reload();
+    history.push(`/UserPage/${user.nameid}`);
+    window.location.reload();
   };
 
   const onFinishFailed = errorInfo => {
